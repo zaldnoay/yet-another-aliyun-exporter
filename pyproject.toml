@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "ali_exporter"
+version = "0.1.0"
+description = ""
+authors = ["zaldnoay <zunway@outlook.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.7.1"
+marshmallow = "^3"
+"ruamel.yaml" = "^0.17"
+alibabacloud-cms20190101 = "^2"
+prometheus-client = "^0.11"
+alibabacloud-tag20180828 = "^1"
+Twisted = "^21"
+click = "^8"
+
+[tool.poetry.dev-dependencies]
+ipykernel = "^6"
+pandas = "^1"
+nbconvert = "^6"
+
+[tool.poetry.scripts]
+start = "ali_exporter:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,59 @@
+endpoint: "metrics.cn-beijing.aliyuncs.com"
+log_level: INFO
+delay_seconds: 60
+period_seconds: 60
+metrics:
+- namespace: acs_ots_new
+  metric_name: InstanceCount2xxNumber
+- namespace: acs_ots_new
+  metric_name: InstanceElasticVCU
+- namespace: acs_ots_new
+  metric_name: InstanceFailRowCount
+  delay_seconds: 120
+  range_seconds: 600
+- namespace: acs_ots_new
+  metric_name: Count2xxNumber
+  range_seconds: 600
+- namespace: acs_ots_new
+  metric_name: FailRowCount
+  period_seconds: 300
+- namespace: acs_kafka
+  metric_name: instance_message_output
+  dimensions:
+    - instanceId: xxxyyy
+  period_seconds: 300
+- namespace: acs_kafka
+  metric_name: message_accumulation
+  period_seconds: 120
+  group_by:
+    - instanceId
+- namespace: acs_kafka
+  metric_name: message_accumulation_onetopic
+  range_seconds: 600
+  delay_seconds: 120
+  dimensions:
+    - instanceId: xxxyyy
+  group_by:
+    - instanceId
+- namespace: acs_slb_dashboard
+  metric_name: ActiveConnection
+  group_by:
+    - instanceId
+  tag_select:
+    regions:
+      - cn-beijing
+      - us-east-1
+    resource_id_dimension: instanceId
+    resource_type_selection:
+      service: slb
+      resource_type: instance
+- namespace: acs_slb_dashboard
+  metric_name: DropConnection
+  tag_select:
+    regions:
+      - cn-beijing
+      - us-east-1
+    resource_id_dimension: instanceId
+    resource_type_selection:
+      service: slb
+      resource_type: instance
