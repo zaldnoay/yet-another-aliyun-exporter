@@ -2,7 +2,7 @@ import json
 import re
 import logging
 from datetime import datetime, timezone
-from typing import Dict, Iterable, List, Set, Union
+from typing import Dict, Iterable, List, Union
 from Tea.exceptions import UnretryableException, TeaException
 from alibabacloud_tea_openapi.models import Config as aliConfig
 from alibabacloud_credentials.client import Client as credClient
@@ -51,10 +51,13 @@ class AliyunCollector:
     # 将驼峰命名法的指标转换为snake case
         return re.sub(r'([a-z0-9])([A-Z])', r'\g<1>_\g<2>', name).lower()
 
-    def _get_label_keys(self, datapoint: Dict) -> Iterable[str]:
+    def _get_label_keys(self, datapoint: Dict[str, Union[str, float]]) -> Iterable[str]:
     # 生成指标标签，从数据点(datapoint)中去除数值的键
         for key in datapoint:
-            if key not in {'timestamp', 'Maximum', 'Minimum', 'Average', 'Value', 'Sum'}:
+            if key.lower() not in {
+                'timestamp', 'maximum', 'minimum', 'average', 
+                'value', 'sum', 'sumps', 'samplecount'
+            }:
                 yield key
 
     def _format_label_names(self, name_list: Iterable[str]) -> Iterable[str]:
