@@ -16,7 +16,7 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_NO_INTERACTION=1 \
     # paths
     # this is where our requirements + virtual environment will live
-    APP_PATH="/srv/ali_exporter/"
+    APP_PATH="/srv/ali-exporter/"
 
 WORKDIR $APP_PATH
 
@@ -31,7 +31,7 @@ RUN poetry install --no-dev
 
 FROM python:3.9-slim
 
-ENV APP_PATH="/srv/ali_exporter/" \
+ENV APP_PATH="/srv/ali-exporter/" \
     POETRY_VIRTUALENVS_IN_PROJECT=true \
     POETRY_NO_INTERACTION=1 \
     PIP_NO_CACHE_DIR=off \
@@ -48,4 +48,4 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT [ "/usr/bin/tini", "--", "poetry", "run", "start" ]
-CMD ["-c", "app.yaml"]
+CMD ["-c", "/srv/ali-exporter/config/aliyun.yaml"]
