@@ -8,8 +8,8 @@ from ruamel.yaml import YAML, YAMLError
 from alibabacloud_credentials.exceptions import CredentialException
 from prometheus_client.core import REGISTRY
 from prometheus_client.twisted import MetricsResource
-from twisted.web.server import Site
-from twisted.web.resource import Resource
+from twisted.web.server import Site, GzipEncoderFactory
+from twisted.web.resource import Resource, EncodingResourceWrapper
 from twisted.internet import reactor
 from .config import ConfigSchema
 from .collector import AliyunCollector
@@ -61,7 +61,8 @@ def main(config, port):
 
     try:
         root = Resource()
-        root.putChild(b'metrics', MetricsResource())
+        wrapped = EncodingResourceWrapper(MetricsResource(), [GzipEncoderFactory()])
+        root.putChild(b'metrics', wrapped)
 
         factory = Site(root)
         reactor.listenTCP(port, factory)
