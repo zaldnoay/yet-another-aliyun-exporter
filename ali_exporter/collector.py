@@ -190,7 +190,7 @@ class AliyunCollector:
                     gauge.add_metric(
                         labels=[datapoint[key] for key in label_names], 
                         value=datapoint[statistic], 
-                        timestamp=datapoint['timestamp'] if self.config.set_timestamp and rule.set_timestamp else None
+                        timestamp=datapoint['timestamp'] / 1000 if self.config.set_timestamp and rule.set_timestamp else None
                     )
             yield gauge
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ali_exporter"
-version = "0.1.1"
+version = "0.1.2"
 description = "Yet another aliyun exporter"
 authors = ["zaldnoay <zunway@outlook.com>"]
 
