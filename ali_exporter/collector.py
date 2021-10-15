@@ -24,16 +24,11 @@ failedrequestCounter = Counter("cms_failed_requests", "CMS Failed Requests Total
 class AliyunCollector:
     def __init__(self, config: Config):
         self.config = config
+        self.cred_client = credClient()
         self.cms_client = cmsClient(
             aliConfig(
-                credential=credClient(),
+                credential=self.cred_client,
                 endpoint=config.endpoint.metrics
-            )
-        )
-        self.tag_client = tagClient(
-            aliConfig(
-                credential=credClient(),
-                endpoint=config.endpoint.tag
             )
         )
 
@@ -137,6 +132,12 @@ class AliyunCollector:
 
         optional_params = {}
         for region in rule.tag_select.regions:
+            tag_client = tagClient(
+                aliConfig(
+                    credential=self.cred_client,
+                    region_id=region
+                )
+            )
             while True:
                 req = ListTagResourcesRequest(
                     region_id=region,
@@ -147,7 +148,7 @@ class AliyunCollector:
                     **optional_params
                 )
 
-                response = self.tag_client.list_tag_resources(req)
+                response = tag_client.list_tag_resources(req)
                 requestCounter.labels(action="ListTagResources").inc()
                 yield from response.body.tag_resources
                 if not response.body.next_token:

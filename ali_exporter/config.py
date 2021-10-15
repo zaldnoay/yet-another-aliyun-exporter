@@ -33,7 +33,6 @@ class MetricRule:
 
 @dataclass
 class Endpoint:
-    tag: str = field(default="tag.aliyuncs.com")
     metrics: str = field(default="metrics.aliyuncs.com")
 
 
@@ -88,7 +87,6 @@ class MetricRuleSchema(_BaseSchema):
 
 
 class EndpointSchema(Schema):
-    tag = fields.String()
     metrics = fields.String()
 
     @post_load
