@@ -27,13 +27,13 @@ class AliyunCollector:
         self.cms_client = cmsClient(
             aliConfig(
                 credential=credClient(),
-                endpoint=config.endpoint
+                endpoint=config.endpoint.metrics
             )
         )
         self.tag_client = tagClient(
             aliConfig(
                 credential=credClient(),
-                endpoint="tag.aliyuncs.com"
+                endpoint=config.endpoint.tag
             )
         )
 

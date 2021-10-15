@@ -32,9 +32,15 @@ class MetricRule:
 
 
 @dataclass
+class Endpoint:
+    tag: str = field(default="tag.aliyuncs.com")
+    metrics: str = field(default="metrics.aliyuncs.com")
+
+
+@dataclass
 class Config:
     metrics: List[MetricRule]
-    endpoint: str = field(default="metrics.cn-beijing.aliyuncs.com")
+    endpoint: Endpoint
     log_level: str = field(default="WARNING")
     period_seconds: int = field(default=60)
     set_timestamp: bool =  field(default=True)
@@ -81,10 +87,18 @@ class MetricRuleSchema(_BaseSchema):
         return MetricRule(**data)
 
 
+class EndpointSchema(Schema):
+    tag = fields.String()
+    metrics = fields.String()
+
+    @post_load
+    def create(self, data, **kwargs):
+        return Endpoint(**data)
+
 class ConfigSchema(_BaseSchema):
     metrics = fields.List(fields.Nested(MetricRuleSchema), required=True)
     log_level = fields.String(validate=validate.OneOf(logging._nameToLevel))
-    endpoint = fields.String()
+    endpoint = fields.Nested(EndpointSchema)
 
     @post_load
     def create(self, data, **kwargs):
