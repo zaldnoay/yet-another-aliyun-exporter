@@ -27,7 +27,8 @@ def main(config, port):
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(
         OneLineExceptionFormatter(
-            "time:%(asctime)s\tname:%(name)s\tlevel:%(levelname)s\tthreadName:%(threadName)s\tmessage:%(message)s"
+            "time:%(asctime)s\tname:%(name)s\tlevel:%(levelname)s\tthreadName:%(threadName)s\tmessage:%(message)s",
+            datefmt="%Y-%m-%dT%H:%M:%S%z"
         )
     )
     root_logger.addHandler(console_handler)
