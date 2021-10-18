@@ -107,3 +107,9 @@ metrics:
 | period_seconds | 是 | 监控数据的统计周期值参考[云服务监控项](https://help.aliyun.com/document_detail/163515.html)中的Period，可全局设置 |
 | delay_seconds | 是 | 时间偏移量, 结束时间=now-delay_seconds，用来避免指标数据未完全聚合，可全局设置 |
 | range_seconds | 是 | 选取时间范围, 开始时间=now-range_seconds, 结束时间=now，可全局设置 | 
+
+## 感谢
+
+* [aliyun-exporter](https://github.com/aylei/aliyun-exporter)
+* [cloudwatch-exporter](https://github.com/prometheus/cloudwatch_exporter)
+* [tencent-exporter](https://github.com/tencentyun/tencentcloud-exporter)
