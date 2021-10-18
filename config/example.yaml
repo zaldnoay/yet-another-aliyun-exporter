@@ -1,4 +1,5 @@
-endpoint: "metrics.cn-beijing.aliyuncs.com"
+endpoint: 
+  tag: "metrics.cn-beijing.aliyuncs.com"
 log_level: INFO
 delay_seconds: 60
 period_seconds: 60
