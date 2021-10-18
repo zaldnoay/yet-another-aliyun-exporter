@@ -40,8 +40,8 @@ class Endpoint:
 class Config:
     metrics: List[MetricRule]
     endpoint: Endpoint
+    period_seconds: Optional[int]
     log_level: str = field(default="WARNING")
-    period_seconds: int = field(default=60)
     set_timestamp: bool =  field(default=True)
     delay_seconds: timedelta = field(default=timedelta(seconds=60))
     range_seconds: timedelta = field(default=timedelta(seconds=300))

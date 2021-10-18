@@ -84,16 +84,18 @@ class AliyunCollector:
             optional_params['dimensions'] = json.dumps(rule.dimensions)
         if rule.period_seconds:
             optional_params['period'] = rule.period_seconds
-        else:
+        elif self.config.period_seconds:
             optional_params['period'] = self.config.period_seconds
         if rule.delay_seconds:
             end_time = now - rule.delay_seconds
         else:
             end_time = now - self.config.delay_seconds
         optional_params['end_time'] = end_time.strftime("%Y-%m-%dT%H:%M:%SZ")
-
         if rule.range_seconds:
             start_time = end_time - rule.range_seconds
+            optional_params['start_time'] = start_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+        elif self.config.range_seconds:
+            start_time = end_time - self.config.range_seconds
             optional_params['start_time'] = start_time.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         # 记录请求指标
