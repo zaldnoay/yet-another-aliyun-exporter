@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import json
 import re
 import logging
@@ -168,11 +169,14 @@ class AliyunCollector:
         try:
             datapoints = list(self._query_metric(rule))
             label_names = list(self._get_label_keys(datapoints[0]))
-        except TeaException as e:
-            logger.error(e)
-            return
         except UnretryableException as e:
             logger.exception(f"不可恢复错误! Code: {e.code}")
+            return
+        except IndexError as e:
+            logging.error(f"KeyError: {repr(e)}| Datapoints: {datapoints}| Rule: {rule}")
+            return
+        except TeaException as e:
+            logger.error(e)
             return
         except Exception as e:
             logger.exception("其他异常")
