@@ -38,7 +38,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 9107
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -46,10 +46,10 @@ resources:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   limits:
-    cpu: 50m
+    cpu: 200m
     memory: 128Mi
   requests:
-    cpu: 200m
+    cpu: 50m
     memory: 128Mi
 
 nodeSelector: {}
@@ -67,7 +67,7 @@ serviceMonitor:
   enabled: false
   # serviceMonitor.interval -- Interval that Prometheus scrapes Cluster Autoscaler metrics.
   interval: 60s
-  scrapeTimeout: 60s
+  scrapeTimeout: 30s
   # serviceMonitor.namespace -- Namespace which Prometheus is running in.
   namespace: monitoring
   ## [Prometheus Selector Label](https://github.com/helm/charts/tree/master/stable/prometheus-operator#prometheus-operator-1)

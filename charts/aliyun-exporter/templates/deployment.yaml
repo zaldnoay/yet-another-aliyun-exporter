@@ -45,6 +45,9 @@ spec:
             - secretRef:
                 name: {{ include "aliyun-exporter.fullname" . }}-env
           {{- end }}
+          volumeMounts:
+            - mountPath: /srv/ali-exporter/config/
+              name: config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
