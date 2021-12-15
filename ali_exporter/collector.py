@@ -168,6 +168,8 @@ class AliyunCollector:
         # 获取指标数据点，并解析数据点的标签
         try:
             datapoints = list(self._query_metric(rule))
+            if not datapoints:
+                return
             label_names = list(self._get_label_keys(datapoints[0]))
         except UnretryableException as e:
             logger.exception(f"不可恢复错误! Code: {e.code}")
