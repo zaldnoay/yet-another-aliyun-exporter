@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "yet-another-aliyun-exporter"
-version = "0.2.3"
+version = "v0.2.3"
 description = "Yet another aliyun exporter"
 authors = ["zaldnoay <zunway@outlook.com>"]
 license = "LGPL-2.1-or-later"
