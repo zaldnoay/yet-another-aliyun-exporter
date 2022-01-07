@@ -1,8 +1,13 @@
 [tool.poetry]
-name = "ali_exporter"
+name = "yet-another-aliyun-exporter"
 version = "0.2.3"
 description = "Yet another aliyun exporter"
 authors = ["zaldnoay <zunway@outlook.com>"]
+license = "LGPL-2.1-or-later"
+readme = "README.md"
+packages = [
+    { include = "aliyun_exporter" }
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7.1"
@@ -20,7 +25,7 @@ pandas = "^1"
 nbconvert = "^6"
 
 [tool.poetry.scripts]
-start = "ali_exporter:main"
+start = "aliyun_exporter:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
