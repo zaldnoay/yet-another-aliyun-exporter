@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: mvops/aliyun-exporter
+  repository: ghcr.io/zaldnoay/yet-another-aliyun-exporter
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
