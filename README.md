@@ -52,6 +52,32 @@ metrics:
 poetry run start --config exporter.yaml
 ```
 
+## Docker运行
+
+### 镜像
+
+目前docker镜像托管在github镜像仓库中，可以从以下地址获取
+
+* [ghcr.io/zaldnoay/yet-another-aliyun-exporter](https://github.com/zaldnoay/yet-another-aliyun-exporter/pkgs/container/yet-another-aliyun-exporter)
+
+可用的tag
+
+* `main`: git仓库主分支的快照
+* `latest`: 最新发布版本
+* `vX.Y.Z`: 指定X.Y.Z版本的镜像
+
+### 运行
+
+镜像默认暴露9107端口作为服务，配置文件放置在`/srv/ali-exporter/config/aliyun.yaml`，使用docker运行的时候可以将配置文件挂载到该目录。
+
+```
+docker run -p 9107 -v /path/on/host/config.yml:/srv/ali-exporter/config/aliyun.yaml ghcr.io/zaldnoay/yet-another-aliyun-exporter
+```
+
+## 安装到Kubernetes（helm)
+
+TODO
+
 ## 配置详细
 
 ``` yaml
