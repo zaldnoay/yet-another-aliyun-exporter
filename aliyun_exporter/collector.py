@@ -141,23 +141,26 @@ class AliyunCollector:
                     region_id=region
                 )
             )
-            while True:
-                req = ListTagResourcesRequest(
-                    region_id=region,
-                    resource_arn=[
-                        f"arn:acs:{rule.tag_select.resource_type_selection.service}:*:*:{rule.tag_select.resource_type_selection.resource_type}/*"
-                    ],
-                    page_size=500,
-                    **optional_params
-                )
 
-                response = tag_client.list_tag_resources(req)
-                requestCounter.labels(action="ListTagResources").inc()
-                yield from response.body.tag_resources
-                if not response.body.next_token:
-                    break
-                else:
-                    optional_params = {"next_token": response.body.next_token}
+            # 记录标签api请求异常
+            with failedrequestCounter.labels(action="ListTagResources").count_exceptions():
+                while True:
+                    req = ListTagResourcesRequest(
+                        region_id=region,
+                        resource_arn=[
+                            f"arn:acs:{rule.tag_select.resource_type_selection.service}:*:*:{rule.tag_select.resource_type_selection.resource_type}/*"
+                        ],
+                        page_size=500,
+                        **optional_params
+                    )
+
+                    response = tag_client.list_tag_resources(req)
+                    requestCounter.labels(action="ListTagResources").inc()
+                    yield from response.body.tag_resources
+                    if not response.body.next_token:
+                        break
+                    else:
+                        optional_params = {"next_token": response.body.next_token}
 
     def metric_generate(self, rule: MetricRule) -> Iterable[Union[GaugeMetricFamily, InfoMetricFamily]]:
         formated_metric_name = self._safe_name(f"{rule.namespace.lower()}_{self._to_snake_case(rule.metric_name)}")
