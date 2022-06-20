@@ -24,6 +24,7 @@ failedrequestCounter = Counter("cms_failed_requests", "CMS Failed Requests Total
 
 class AliyunCollector:
     def __init__(self, config: Config):
+        self.published_tag_resources_arn = set()
         self.config = config
         self.cred_client = credClient()
         self.cms_client = cmsClient(
@@ -235,6 +236,5 @@ class AliyunCollector:
         yield info_metric
 
     def collect(self):
-        self.published_tag_resources_arn = set()
         for rule in self.config.metrics:
             yield from self.metric_generate(rule)
