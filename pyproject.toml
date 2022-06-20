@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "yet-another-aliyun-exporter"
-version = "v0.2.3"
+version = "v0.3.0"
 description = "Yet another aliyun exporter"
 authors = ["zaldnoay <zunway@outlook.com>"]
 license = "LGPL-2.1-or-later"
@@ -10,19 +10,19 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.7.1"
+python = ">=3.7.1 <4"
 marshmallow = "^3"
 "ruamel.yaml" = "^0.17"
 alibabacloud-cms20190101 = "^2"
-prometheus-client = "^0.11"
+prometheus-client = "^0.14"
 alibabacloud-tag20180828 = "^1"
-Twisted = "^21"
+Twisted = "^22"
 click = "^8"
 
 [tool.poetry.dev-dependencies]
-ipykernel = "^6"
+ipykernel = "*"
 pandas = "^1"
-nbconvert = "^6"
+nbconvert = "*"
 
 [tool.poetry.scripts]
 start = "aliyun_exporter:main"
