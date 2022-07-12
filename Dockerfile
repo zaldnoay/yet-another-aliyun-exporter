@@ -9,14 +9,10 @@ ENV PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=60 \
     # do not ask any interactive question
-    POETRY_NO_INTERACTION=1 \
-    # paths
-    # this is where our requirements + virtual environment will live
-    APP_PATH="/srv/ali-exporter/"
+    POETRY_NO_INTERACTION=1
 
-WORKDIR $APP_PATH
-
-COPY . .
+WORKDIR /srv/ali-exporter/
+COPY pyproject.toml poetry.lock ./
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
@@ -24,23 +20,21 @@ RUN apt-get update && \
         build-essential
 RUN pip install poetry
 RUN poetry export --without-hashes > requirements.txt
+RUN python -m venv /srv/ali-exporter/venv && \
+    . ./venv/bin/activate && \
+    pip install -r requirements.txt
 
 FROM python:3.9-slim
 
-ENV APP_PATH="/srv/ali-exporter/" \
-    POETRY_NO_INTERACTION=1 \
-    PIP_NO_CACHE_DIR=off \
-    PIP_DISABLE_PIP_VERSION_CHECK=on \
-    PIP_DEFAULT_TIMEOUT=60
+WORKDIR /srv/ali-exporter/
+COPY --from=builder /srv/ali-exporter/venv ./venv
+COPY . .
 
-COPY --from=builder $APP_PATH $APP_PATH
+ENV PATH /srv/ali-exporter/venv/bin:$PATH
 
-WORKDIR ${APP_PATH}
-
-RUN pip install -r requirements.txt
 RUN apt-get update && \
     apt-get install -y --no-install-recommends tini && \
     rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT [ "/usr/bin/tini", "--", "python", "-m", "aliyun_exporter" ]
-CMD ["-c", "/srv/ali-exporter/config/aliyun.yaml"]
+ENTRYPOINT [ "/usr/bin/tini", "--" ]
+CMD ["python", "-m", "aliyun_exporter", "-c", "/srv/ali-exporter/config/aliyun.yaml"]
