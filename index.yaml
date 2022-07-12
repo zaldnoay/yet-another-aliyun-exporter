@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   aliyun-exporter:
   - apiVersion: v2
+    appVersion: 0.3.2
+    created: "2022-07-12T10:03:56.651825271Z"
+    description: A Helm chart for Kubernetes
+    digest: f6b7e44cb7556ca9bec45e9cdb405dd09cd8ff54d883ffbcc95661c8dfefd3e8
+    name: aliyun-exporter
+    type: application
+    urls:
+    - https://github.com/zaldnoay/yet-another-aliyun-exporter/releases/download/chart-aliyun-exporter-0.2.2/aliyun-exporter-0.2.2.tgz
+    version: 0.2.2
+  - apiVersion: v2
     appVersion: 0.2.3
     created: "2022-01-10T11:04:01.136225677Z"
     description: A Helm chart for Kubernetes
@@ -11,4 +21,4 @@ entries:
     urls:
     - https://github.com/zaldnoay/yet-another-aliyun-exporter/releases/download/aliyun-exporter-0.2.1/aliyun-exporter-0.2.1.tgz
     version: 0.2.1
-generated: "2022-01-10T11:04:01.136232976Z"
+generated: "2022-07-12T10:03:56.65183447Z"
