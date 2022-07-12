@@ -62,8 +62,7 @@ def main(config, port):
 
     try:
         root = Resource()
-        wrapped = EncodingResourceWrapper(MetricsResource(), [GzipEncoderFactory()])
-        root.putChild(b'metrics', wrapped)
+        root.putChild(b'metrics', MetricsResource())
 
         factory = Site(root)
         reactor.listenTCP(port, factory)
