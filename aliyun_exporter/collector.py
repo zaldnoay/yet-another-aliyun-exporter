@@ -24,7 +24,6 @@ failedrequestCounter = Counter("cms_failed_requests", "CMS Failed Requests Total
 
 class AliyunCollector:
     def __init__(self, config: Config):
-        self.published_tag_resources_arn = set()
         self.config = config
         self.cred_client = credClient()
         self.cms_client = cmsClient(
@@ -214,8 +213,10 @@ class AliyunCollector:
             labels=["job", "instance"]
         )
         try:
+            # 设置已发布过的资源arn，不再创建已有的资源的标签信息
+            published_tag_resources_arn = set()
             for tag_resource in self._query_resource_tag(rule):
-                if tag_resource.resource_arn in self.published_tag_resources_arn:
+                if tag_resource.resource_arn in published_tag_resources_arn:
                     continue
                 values = {
                     f"tag_{self._safe_label_name(tag.key)}": tag.value for tag in tag_resource.tags
@@ -229,7 +230,7 @@ class AliyunCollector:
                     labels=[job_name, ""],
                     value=values
                 )
-                self.published_tag_resources_arn.add(tag_resource.resource_arn)
+                published_tag_resources_arn.add(tag_resource.resource_arn)
         except TeaException as e:
             logger.error(e)
             return
