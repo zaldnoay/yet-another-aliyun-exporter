@@ -19,21 +19,8 @@ metrics:
   metric_name: FailRowCount
   period_seconds: 300
 - namespace: acs_kafka
-  metric_name: instance_message_output
-  dimensions:
-    - instanceId: xxxyyy
-  period_seconds: 300
-- namespace: acs_kafka
   metric_name: message_accumulation
   period_seconds: 120
-  group_by:
-    - instanceId
-- namespace: acs_kafka
-  metric_name: message_accumulation_onetopic
-  range_seconds: 600
-  delay_seconds: 120
-  dimensions:
-    - instanceId: xxxyyy
   group_by:
     - instanceId
 - namespace: acs_slb_dashboard
