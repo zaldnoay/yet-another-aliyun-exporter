@@ -27,7 +27,7 @@ Exporter使用阿里云SDK的默认凭据链查找可用凭据，目前支持三
     使用`ALIBABA_CLOUD_ACCESS_KEY_ID`和`ALIBABA_CLOUD_ACCESS_KEY_SECRET`作为凭据
 2. 配置文件
 
-    读取`~/.alibabacloud/credentials`配置文件作为凭据
+    读取`~/.alibabacloud/credentials.ini`配置文件作为凭据
 3. 实例RAM角色
 
     如果定义了`ALIBABA_CLOUD_ECS_METADATA`环境变量且不为空，则使用变量中的值作为ECS RAM角色名称获取临时凭据
